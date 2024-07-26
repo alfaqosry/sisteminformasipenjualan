@@ -17,4 +17,10 @@ class Pengeluaran extends Model
         'kuantitas_pengeluaran'
 
     ];
+
+    public function pegawai()
+    {
+        return $this->belongsTo(User::class);
+    }
+
 }

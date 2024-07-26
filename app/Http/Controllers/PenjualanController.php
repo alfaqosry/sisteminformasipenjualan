@@ -21,7 +21,6 @@ class PenjualanController extends Controller
     )->join('users', 'penjualans.kasir_id', '=','users.id'
     )->select('barangs.*', 'penjualans.kuantitas','penjualans.harga','penjualans.sisa_stok', 'users.name','penjualans.created_at as tanggal')
     ->latest()->get();
-    $tglhariini = date('Y-m-d');
 
     $totalhariini = Penjualan::join('barangs', 'penjualans.barang_id', '=','barangs.id'
     )->whereDate('penjualans.created_at', Carbon::today())->select(DB::raw('sum(barangs.harga_barang * penjualans.kuantitas) as total'))->first();

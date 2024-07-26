@@ -74,7 +74,7 @@
                     </div>
                     <label>Password</label>
                     <div class="mb-3 input-group has-validation">
-                      <input type="email" class="form-control  @error('password') is-invalid @enderror" name="password" placeholder="Password" aria-label="Password" aria-describedby="password-addon">
+                      <input type="password" class="form-control  @error('password') is-invalid @enderror" name="password" placeholder="Password" aria-label="Password" aria-describedby="password-addon">
                       @error('password')
                       <div class="invalid-feedback">{{$message}}</div>
                       @enderror

@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\Grafik;
 use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Dashboard;
 use App\Models\Penjualan;
 use App\Models\Cabangtoko;
+use App\Models\Pengeluaran;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -21,43 +23,31 @@ class DashboardController extends Controller
         $totalpenjualan = Penjualan::count();
 
         $penjualans = Penjualan::select('id', 'created_at')
-        ->get()
-        ->groupBy(function ($date) {
-            return Carbon::parse($date->created_at)->format('m');
-        });
+            ->get()
+            ->groupBy(function ($date) {
+                return Carbon::parse($date->created_at)->format('m');
+            });
 
-    $penjualancount = [];
-    $penjualanArr = [];
 
-    foreach ($penjualans as $key => $value) {
-        $penjualancount[(int)$key] = count($value);
-    }
+        $pengeluaran = Pengeluaran::select('id', 'created_at')
+            ->get()
+            ->groupBy(function ($date) {
+                return Carbon::parse($date->created_at)->format('m');
+            });
 
-    $month = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
-    for ($i = 1; $i <= 12; $i++) {
-        if (!empty($penjualancount[$i])) {
-            $penjualanArr[$month[$i - 1]] = $penjualancount[$i];
-            
-        } else {
-            $penjualanArr[$month[$i - 1]] = 0;
-         
-        }
-       
-    }
 
-  
+        // return response()->json(array_values($penjualanArr));
 
-    // return response()->json(array_values($penjualanArr));
 
-       
         return view(
             'dashboard.index',
             [
                 'totaltoko' => $totaltoko,
                 'totalpegawai' => $totalpegawai,
                 'totalpenjualan' => $totalpenjualan,
-                'penjualanArr' => $penjualanArr
+                'penjualanArr' => Grafik::get_grafik($penjualans),
+                'pengeluaranArr' => Grafik::get_grafik($pengeluaran)
             ]
         );
     }
@@ -65,6 +55,9 @@ class DashboardController extends Controller
     /**
      * Show the form for creating a new resource.
      */
+
+    
+
     public function create()
     {
         //
