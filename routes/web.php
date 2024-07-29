@@ -5,6 +5,7 @@ use App\Models\Cabangtoko;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BarangController;
+use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PenjualanController;
 use App\Http\Controllers\CabangtokoController;
@@ -40,4 +41,9 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/pengeluaran', [PengeluaranController::class, 'index'])->name('pengeluaran.index');
     Route::get('/pengeluaran/create', [PengeluaranController::class, 'create'])->name('pengeluaran.create');
     Route::post('/pengeluaran/store', [PengeluaranController::class, 'store'])->name('pengeluaran.store');
+
+
+    Route::get('/laporan', [LaporanController::class, 'index'])->name('laporan.index');
+    Route::get('/laporan/show/{id}', [LaporanController::class, 'show'])->name('laporan.show');
+    Route::get('/laporan/getpenjualan/{id}', [LaporanController::class, 'get_penjualan'])->name('laporan.getpenjualan');
 });
