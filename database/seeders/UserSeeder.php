@@ -3,36 +3,19 @@
 namespace Database\Seeders;
 
 use App\Models\User;
-use App\Models\Barang;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use App\Models\Cabangtoko;
-use App\Models\Pegawaitoko;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
-use Spatie\Permission\Models\Role;
-class DatabaseSeeder extends Seeder
+
+class UserSeeder extends Seeder
 {
     /**
-     * Seed the application's database.
+     * Run the database seeds.
      */
     public function run(): void
     {
-        Role::create([
-            'name' => 'pemilik'
-
-        ]);
-        Role::create([
-            'name' => 'manajer'
-
-        ]);
-        Role::create([
-            'name' => 'pegawai'
-
-        ]);
-        Role::create([
-            'name' => 'kasir'
-
-        ]);
         $pemilik = User::create([
             'name' => 'pemilik',
             'email' => 'pemilik@gmail.com',
@@ -56,7 +39,5 @@ class DatabaseSeeder extends Seeder
 
         $manajer->assignRole('manajer');
     }
-
-       
-    }
-
+}
+// 2314101098
