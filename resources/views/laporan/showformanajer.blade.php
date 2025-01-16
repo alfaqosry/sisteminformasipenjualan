@@ -1,6 +1,6 @@
 <x-layout>
     <div class="container-fluid py-4">
-        <h4>Laporan {{$toko->nama_cabang}}</h4>
+<h4>Laporan {{$toko->nama_cabang}}</h4>
         <div class="row mb-4">
             <div class="col-xl-6 col-sm-6 mb-xl-0 mb-4">
                 <div class="card">
@@ -185,6 +185,10 @@
                                     @endforeach
                                 </tbody>
                             </table>
+                        
+                        
+                        
+                        
                         
                         </div>
                         <div class="tab-pane fade" id="rekap" role="tabpanel" aria-labelledby="rekap-tab">...</div>

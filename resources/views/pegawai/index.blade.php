@@ -8,10 +8,10 @@
                         <div class="row">
                             <div class="col-8">
                                 <div class="numbers">
-                                    <p class="text-sm mb-0 text-capitalize font-weight-bold">Pendapatan Hari Ini</p>
+                                    <p class="text-sm mb-0 text-capitalize font-weight-bold">Pengeluaran Hari Ini</p>
                                     <h5 class="font-weight-bolder mb-0">
-
-                                        Rp.{{ number_format($totalhariini->total, 0, ',', '.') }}
+                                        @rupiah($totalhariini->total)
+                                     
 
                                     </h5>
                                 </div>
@@ -31,9 +31,10 @@
                         <div class="row">
                             <div class="col-8">
                                 <div class="numbers">
-                                    <p class="text-sm mb-0 text-capitalize font-weight-bold">Total Pendapatan</p>
+                                    <p class="text-sm mb-0 text-capitalize font-weight-bold">Total Pengeluaran</p>
                                     <h5 class="font-weight-bolder mb-0">
-                                        Rp.{{ number_format($totalpendapatan->total, 0, ',', '.') }}
+                                       @rupiah(  $totalpengeluaran->total)
+                                        
 
                                     </h5>
                                 </div>
@@ -56,12 +57,12 @@
                 <div class="card-header pb-0 px-3">
                     <div class="row">
                         <div class="col-6 d-flex align-items-center">
-                            <h6 class="mb-0">Daftar Laporan Toko</h6>
+                            <h6 class="mb-0">Daftar Pegawai</h6>
                         </div>
 
                         <div class="col-6 text-end">
-                            {{-- <a class="btn bg-gradient-dark mb-0" href="{{ route('penjualan.create') }}"><i
-                                    class="fas fa-plus" aria-hidden="true"></i>&nbsp;&nbsp;Tambah Penjualan</a> --}}
+                            <a class="btn bg-gradient-dark mb-0" href="{{ route('pengeluaran.create') }}"><i
+                                    class="fas fa-plus" aria-hidden="true"></i>&nbsp;&nbsp;Tambah Pegawai</a>
                         </div>
                     </div>
 
@@ -71,18 +72,25 @@
                     <table class="table table-striped">
                         <tr>
                             <th>No</th>
-                            <th>Cabang</th>
-                            <th>Alamat</th>
-                            <th>Manajer</th>
-                          
+                            <th>Nama</th>
+                            <th>Email</th>
+                            <th>Tanggal Mendaftar</th>
+                            <th>Action</th>
 
-                            @foreach ($daftartoko as $item)
+                            @foreach ($pegawai as $item)
                         </tr>
                         <td>{{ $loop->iteration }}</td>
-                        <td><a href="{{route('laporan.show', $item->id)}}"><p class="font-weight-bold text-primary">{{ $item->nama_cabang }}</p></a></td>
-                        <td>{{ $item->alamat_cabang }}</td>
                         <td>{{ $item->name }}</td>
-                       
+                        <td>{{ $item->email }}</td>
+                      
+                        <td>{{ $item->created_at }}</td>
+
+
+                         <td class="align-middle">
+                            <a href="#" class="btn btn-sm btn-success">Edit</a>
+                            <a href="#" class="btn btn-sm btn-danger">Hapus</a>
+                           
+                          </td>
                         @endforeach
                     </table>
                 </div>

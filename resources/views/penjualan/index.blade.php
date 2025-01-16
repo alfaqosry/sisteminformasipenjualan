@@ -91,7 +91,11 @@
                         <td>Rp.{{number_format( $item->harga * $item->kuantitas,0,',','.')}}</td>
                         <td>{{ $item->sisa_stok  }}</td>
                         <td>{{ $item->name }}</td>
-                        <td></td>
+                         <td class="align-middle">
+                          <a href="#" class="btn btn-sm btn-success">Edit</a>
+                          <a href="#" class="btn btn-sm btn-danger">Hapus</a>
+                         
+                        </td>
                         @endforeach
                     </table>
                 </div>

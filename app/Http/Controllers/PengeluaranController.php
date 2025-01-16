@@ -19,13 +19,16 @@ class PengeluaranController extends Controller
         $totalhariini = Pengeluaran::where('toko_id', $toko_id->cabangtoko_id)->whereDate('created_at', Carbon::today())->select(DB::raw('sum(harga * kuantitas_pengeluaran) as total'))->first();
         $totalpengeluaran = Pengeluaran::where('toko_id', $toko_id->cabangtoko_id)->select(DB::raw('sum(harga * kuantitas_pengeluaran) as total'))->first();
 
-        $pengeluaran = Pengeluaran::where('toko_id', $toko_id->cabangtoko_id)->latest()->get();
+        $pengeluaran = Pengeluaran::where('toko_id', $toko_id->cabangtoko_id)->with('pegawai')->latest()->get();
         return view('pengeluaran.index', [
             'pengeluaran' => $pengeluaran,
             'totalpengeluaran' => $totalpengeluaran,
             'totalhariini' =>  $totalhariini
         ]);
     }
+
+
+   
 
     /**
      * Show the form for creating a new resource.

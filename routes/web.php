@@ -9,6 +9,7 @@ use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PenjualanController;
 use App\Http\Controllers\CabangtokoController;
+use App\Http\Controllers\PegawaiController;
 use App\Http\Controllers\PengeluaranController;
 
 Route::group(['middleware' => ['guest']], function () {
@@ -17,12 +18,12 @@ Route::group(['middleware' => ['guest']], function () {
     Route::post('/authenticate', [AuthController::class, 'authenticate'])->name('authenticate');
 });
 
-Route::group(['middleware' => ['auth', 'role:pemilik']], function () {
+Route::group(['middleware' => ['auth', 'role:pemilik|manajer']], function () {
 
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-
+    Route::get('/pegawai', [PegawaiController::class, 'index'])->name('pegawai.index');
 
     Route::get('/cabang', [CabangtokoController::class, 'index'])->name('cabang.index');
     Route::get('/cabang/create', [CabangtokoController::class, 'create'])->name('cabang.create');
@@ -45,5 +46,6 @@ Route::group(['middleware' => ['auth', 'role:pemilik']], function () {
 
     Route::get('/laporan', [LaporanController::class, 'index'])->name('laporan.index');
     Route::get('/laporan/show/{id}', [LaporanController::class, 'show'])->name('laporan.show');
+    Route::get('/laporan/laporanformanajer', [LaporanController::class, 'laporanformanajer'])->name('laporan.laporanformanajer');
     Route::get('/laporan/getpenjualan/{id}', [LaporanController::class, 'get_penjualan'])->name('laporan.getpenjualan');
 });
