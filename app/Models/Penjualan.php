@@ -24,7 +24,7 @@ class Penjualan extends Model
         return $this->belongsToMany(User::class);
     }
 
-    public function barangs()
+    public function barang()
     {
         return $this->belongsTo(Barang::class);
     }

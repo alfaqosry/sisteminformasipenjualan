@@ -32,6 +32,11 @@ class User extends Authenticatable
         return $this->belongsTo(Pengeluaran::class);
     }
 
+    public function pegawaiTokos()
+    {
+        return $this->hasMany(PegawaiToko::class);
+    }
+
     /**
      * The attributes that should be hidden for serialization.
      *

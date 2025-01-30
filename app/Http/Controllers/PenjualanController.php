@@ -16,20 +16,36 @@ class PenjualanController extends Controller
      */
     public function index()
     {
-        
-        $penjualan = Penjualan::join('barangs', 'penjualans.barang_id', '=','barangs.id'
-    )->join('users', 'penjualans.kasir_id', '=','users.id'
-    )->select('barangs.*', 'penjualans.kuantitas','penjualans.harga','penjualans.sisa_stok', 'users.name','penjualans.created_at as tanggal')
-    ->latest()->get();
 
-    $totalhariini = Penjualan::join('barangs', 'penjualans.barang_id', '=','barangs.id'
-    )->whereDate('penjualans.created_at', Carbon::today())->select(DB::raw('sum(barangs.harga_barang * penjualans.kuantitas) as total'))->first();
-    $totalpendapatan = Penjualan::join('barangs', 'penjualans.barang_id', '=','barangs.id'
-    )->select(DB::raw('sum(barangs.harga_barang * penjualans.kuantitas) as total'))->first();
+        $penjualan = Penjualan::join(
+            'barangs',
+            'penjualans.barang_id',
+            '=',
+            'barangs.id'
+        )->join(
+            'users',
+            'penjualans.kasir_id',
+            '=',
+            'users.id'
+        )->select('barangs.*', 'penjualans.kuantitas', 'penjualans.harga', 'penjualans.sisa_stok', 'users.name', 'penjualans.created_at as tanggal')
+            ->latest()->get();
+
+        $totalhariini = Penjualan::join(
+            'barangs',
+            'penjualans.barang_id',
+            '=',
+            'barangs.id'
+        )->whereDate('penjualans.created_at', Carbon::today())->select(DB::raw('sum(barangs.harga_barang * penjualans.kuantitas) as total'))->first();
+        $totalpendapatan = Penjualan::join(
+            'barangs',
+            'penjualans.barang_id',
+            '=',
+            'barangs.id'
+        )->select(DB::raw('sum(barangs.harga_barang * penjualans.kuantitas) as total'))->first();
 
 
 
-        
+
         return view('penjualan.index', ['penjualan' => $penjualan, 'totalhariini' => $totalhariini, 'totalpendapatan' => $totalpendapatan]);
     }
 
@@ -39,10 +55,10 @@ class PenjualanController extends Controller
     public function create()
     {
 
-        
-        
+
+
         $barang = Barang::all();
-        return view('penjualan.create',['barangs' => $barang]);
+        return view('penjualan.create', ['barangs' => $barang]);
     }
 
     /**
@@ -54,24 +70,24 @@ class PenjualanController extends Controller
         $request->validate([
             'barang_id' => 'required',
             'kuantitas' => "required",
-        
+
         ]);
 
         $sisastok =  $barang->stok_barang - $request->kuantitas;
-       $toko_id = Pegawaitoko::where('user_id', auth()->user()->id)->first();
+        $toko_id = Pegawaitoko::where('user_id', auth()->user()->id)->first();
         $penjualan = Penjualan::create([
-        "barang_id" => $request->barang_id, 
-        "harga" => $barang->harga_barang,
-        "sisa_stok" => $sisastok,
-        "kuantitas" => $request->kuantitas,
-        "kasir_id" => auth()->user()->id,
-        "toko_id" => $toko_id->cabangtoko_id
-    ]);
-   
-    
-    
-    $barang->stok_barang = $sisastok;
-    $barang->save();
+            "barang_id" => $request->barang_id,
+            "harga" => $barang->harga_barang,
+            "sisa_stok" => $sisastok,
+            "kuantitas" => $request->kuantitas,
+            "kasir_id" => auth()->user()->id,
+            "toko_id" => $toko_id->cabangtoko_id
+        ]);
+
+
+
+        $barang->stok_barang = $sisastok;
+        $barang->save();
 
         return redirect()->route('penjualan.index')->with('sukses', 'Penjualan berhasil ditambahkan.');
     }
@@ -89,7 +105,8 @@ class PenjualanController extends Controller
      */
     public function edit(Penjualan $penjualan)
     {
-        //
+        $barang = Barang::all();
+        return view('penjualan.edit', compact('penjualan', 'barang'));
     }
 
     /**
@@ -97,7 +114,24 @@ class PenjualanController extends Controller
      */
     public function update(Request $request, Penjualan $penjualan)
     {
-        //
+        $request->validate([
+            'barang_id' => 'required',
+            'kuantitas' => "required",
+
+        ]);
+        $barang = Barang::findOrFail($request->barang_id);
+        $sisastok =  $barang->stok_barang - $request->kuantitas;
+        $toko_id = Pegawaitoko::where('user_id', auth()->user()->id)->first();
+        $penjualan->update([
+            "barang_id" => $request->barang_id,
+            "harga" => $barang->harga_barang,
+            "sisa_stok" => $sisastok,
+            "kuantitas" => $request->kuantitas,
+            "kasir_id" => auth()->user()->id,
+            "toko_id" => $toko_id->cabangtoko_id
+        ]);
+
+        return redirect()->route('penjualan.index')->with('sukses', 'Penjualan berhasil diperbarui.');
     }
 
     /**

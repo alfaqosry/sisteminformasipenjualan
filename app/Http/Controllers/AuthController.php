@@ -37,6 +37,13 @@ class AuthController extends Controller
         ])->onlyInput('email');
     }
 
+    public function logout(){
+        // Melakukan logout pengguna
+        Auth::logout();
+
+        // Mengarahkan pengguna ke halaman login setelah logout
+        return redirect()->route('login');
+    }
 
 
     /**

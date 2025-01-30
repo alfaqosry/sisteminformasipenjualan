@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Barang;
 use Illuminate\Http\Request;
+use Illuminate\Database\QueryException;
 
 class BarangController extends Controller
 {
@@ -14,6 +15,11 @@ class BarangController extends Controller
     public function index()
     {
         $user = User::find(auth()->user()->id)->cabangtokos()->first();
+
+        if($user == null){
+
+            abort(404, 'Ada kesalahan anda tidak terdaftar di toko manapun!');
+        }
         $barang = Barang::where('cabangtoko_id', $user->id)->get();
         return view('barang.index', compact('barang'));
     }
@@ -40,16 +46,16 @@ class BarangController extends Controller
         ]);
 
         
-        $user = User::find(auth()->user()->id)->cabangtokos()->first();
+        $cabang = User::find(auth()->user()->id)->cabangtokos()->first();
 
-  
+
         $barang = Barang::create([
             "nama_barang" => $request->nama_barang, 
             "stok_barang" => $request->stok_barang, 
             "harga_barang" => $request->harga_barang, 
             "kode_barang" => $request->kode_barang ,
             "kadarluarsa_barang" => $request->kadarluarsa_barang ,
-            "cabangtoko_id" => $user->id
+            "cabangtoko_id" => $cabang->id
         
         ]);
         return redirect()->route('barang.index')->with('sukses', 'Barang berhasil ditambahkan.');
@@ -60,7 +66,8 @@ class BarangController extends Controller
      */
     public function show(Barang $barang)
     {
-        //
+        
+        
     }
 
     /**
@@ -68,7 +75,8 @@ class BarangController extends Controller
      */
     public function edit(Barang $barang)
     {
-        //
+      
+        return view('barang.edit', compact('barang'));
     }
 
     /**
@@ -76,7 +84,28 @@ class BarangController extends Controller
      */
     public function update(Request $request, Barang $barang)
     {
-        //
+        $request->validate([
+            'nama_barang' => 'required',
+            'kode_barang' => 'required',
+            'stok_barang' => 'required',
+            'harga_barang' => 'required',
+            'kadarluarsa_barang' => 'required'
+        ]);
+
+        
+        $cabang = User::find(auth()->user()->id)->cabangtokos()->first();
+
+
+        $barang->update([
+            "nama_barang" => $request->nama_barang, 
+            "stok_barang" => $request->stok_barang, 
+            "harga_barang" => $request->harga_barang, 
+            "kode_barang" => $request->kode_barang ,
+            "kadarluarsa_barang" => $request->kadarluarsa_barang ,
+            "cabangtoko_id" => $cabang->id
+        
+        ]);
+        return redirect()->route('barang.index')->with('success', 'Barang berhasil diperbarui.');
     }
 
     /**
@@ -84,6 +113,18 @@ class BarangController extends Controller
      */
     public function destroy(Barang $barang)
     {
-        //
+           
+        try {
+           
+    
+           
+            $barang->delete();
+    
+          
+            return redirect()->route('barang.index')->with('success', 'Barang berhasil dihapus.');
+        } catch (QueryException $e) {
+        
+            return redirect()->route('barang.index')->with('error', 'Gagal menghapus barang. Pastikan tidak ada data yang terkait.');
+        }
     }
 }

@@ -33,8 +33,10 @@
                          
                         </div>
                         <div class="ms-auto text-end">
-                          <a class="btn btn-link text-danger text-gradient px-3 mb-0" href="javascript:;"><i class="far fa-trash-alt me-2" aria-hidden="true"></i>Delete</a>
+
+                          <a class="btn btn-link text-success px-3 mb-0" href="{{route('cabang.show',$item->id)}}"><i class="fas fa-pencil-alt text-dark me-2" aria-hidden="true"></i>Lihat</a>
                           <a class="btn btn-link text-dark px-3 mb-0" href="javascript:;"><i class="fas fa-pencil-alt text-dark me-2" aria-hidden="true"></i>Edit</a>
+                          <a class="btn btn-link text-danger text-gradient px-3 mb-0" href="javascript:;"><i class="far fa-trash-alt me-2" aria-hidden="true"></i>Delete</a>
                         </div>
                       </li>
                       @endforeach

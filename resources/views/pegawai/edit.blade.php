@@ -2,16 +2,16 @@
     <div class="container-fluid py-4">
         <div class="row">
             <div class="card">
-                <div class="card-header">Tambah Pegawai</div>
+                <div class="card-header">Edit Pegawai {{$user->name}}</div>
                 <div class="card-body">
 
-                    <form action="{{ route('pegawai.store') }}" method="POST" novalidate>
+                    <form action="{{ route('pegawai.update', $user->id) }}" method="POST" novalidate>
 
                         {{ csrf_field() }}
                         <div class="mb-3">
                             <label for="name" class="form-label ">Nama Pegawai</label>
                             <input type="text" class="form-control @error('name') is-invalid @enderror"
-                                id="name" name="name">
+                                id="name" name="name" value="{{$user->name}}">
                             @error('name')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -20,7 +20,7 @@
                         <div class="mb-3">
                             <label for="email" class="form-label">Email</label>
                             <input type="email" class="form-control @error('email') is-invalid @enderror"
-                                id="email" name="email">
+                                id="email" name="email" value="{{$user->email}}">
                             @error('email')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -30,6 +30,7 @@
                                 <label for="penempatan">Penempatan</label>
 
                                 <select class="form-control" id="penempatan" name="penempatan">
+                                    <option selected value="{{ $pegawaitoko->cabangtoko->id }}">{{ $pegawaitoko->cabangtoko->nama_cabang }}</option>
                                     @foreach ($toko as $item)
                                         <option value="{{ $item->id }}">{{ $item->nama_cabang }}</option>
                                     @endforeach
@@ -42,6 +43,7 @@
                             <label for="role">Jabatan</label>
                             @role('pemilik')
                                 <select class="form-control" id="role" name="role">
+                                    <option selected value="{{ implode(', ', $user->getRoleNames()->toArray()) }}">{{ implode(', ', $user->getRoleNames()->toArray()) }}</option>
                                     <option value="pemilik">Pemilik</option>
                                     <option value="manajer">Manajer</option>
                                     <option value="kasir">Kasir</option>
@@ -51,7 +53,7 @@
                             @endrole
                             @role('manajer')
                                 <select class="form-control" id="role" name="role">
-
+                                    <option selected value="{{ implode(', ', $user->getRoleNames()->toArray()) }}">{{ implode(', ', $user->getRoleNames()->toArray()) }}</option>
                                     <option value="kasir">Kasir</option>
                                     <option value="pegawai">Pegawai</option>
 

@@ -78,7 +78,7 @@
                             <th>Kuantitas</th>
                             <th>Total</th>
                             <th>Pegawai</th>
-                            <th>Action</th>
+                            {{-- <th>Action</th> --}}
 
                             @foreach ($pengeluaran as $item)
                         </tr>
@@ -91,11 +91,11 @@
                         <td>{{ $item->pegawai->name }}</td>
 
 
-                         <td class="align-middle">
+                         {{-- <td class="align-middle">
                             <a href="#" class="btn btn-sm btn-success">Edit</a>
                             <a href="#" class="btn btn-sm btn-danger">Hapus</a>
                            
-                          </td>
+                          </td> --}}
                         @endforeach
                     </table>
                 </div>

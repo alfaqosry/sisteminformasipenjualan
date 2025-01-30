@@ -55,6 +55,7 @@
     <!-- Navbar -->
     <x-header></x-header>
     <!-- End Navbar -->
+    
    {{$slot}}
   </main>
   <div class="fixed-plugin">

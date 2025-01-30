@@ -14,14 +14,14 @@ class Pegawaitoko extends Model
         'cabangtoko_id',
         'jabatan',
     ];
-    public function pegawai()
+    public function user()
     {
-        return $this->belongsToMany(User::class);
+        return $this->belongsTo(User::class);
     }
 
     public function cabangtoko()
     {
-        return $this->belongsToMany(Cabangtoko::class);
+        return $this->belongsTo(CabangToko::class);
     }
 
 }

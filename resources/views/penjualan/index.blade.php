@@ -56,7 +56,7 @@
                 <div class="card-header pb-0 px-3">
                     <div class="row">
                         <div class="col-6 d-flex align-items-center">
-                            <h6 class="mb-0">Daftar Barang</h6>
+                            <h6 class="mb-0">Daftar Penjualan</h6>
                         </div>
 
                         <div class="col-6 text-end">
@@ -92,8 +92,8 @@
                         <td>{{ $item->sisa_stok  }}</td>
                         <td>{{ $item->name }}</td>
                          <td class="align-middle">
-                          <a href="#" class="btn btn-sm btn-success">Edit</a>
-                          <a href="#" class="btn btn-sm btn-danger">Hapus</a>
+                          <a href="{{route('penjualan.edit', $item->id)}}" class="btn btn-sm btn-success">Edit</a>
+                          {{-- <a href="#" class="btn btn-sm btn-danger">Hapus</a> --}}
                          
                         </td>
                         @endforeach

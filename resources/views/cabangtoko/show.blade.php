@@ -1,6 +1,6 @@
 <x-layout>
     <div class="container-fluid py-4">
-<h4>Laporan {{$toko->nama_cabang}}</h4>
+        <h4>Laporan {{$toko->nama_cabang}}</h4>
         <div class="row mb-4">
             <div class="col-xl-6 col-sm-6 mb-xl-0 mb-4">
                 <div class="card">
@@ -117,6 +117,10 @@
                                 aria-selected="false">Pengeluaran</button>
                         </li>
                         <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="barang-tab" data-bs-toggle="tab" data-bs-target="#barang"
+                                type="button" role="tab" aria-controls="barang" aria-selected="false">Stok Barang</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
                             <button class="nav-link" id="rekap-tab" data-bs-toggle="tab" data-bs-target="#rekap"
                                 type="button" role="tab" aria-controls="rekap" aria-selected="false">Rekap</button>
                         </li>
@@ -124,14 +128,6 @@
                     <div class="tab-content" id="myTabContent">
                         <div class="tab-pane fade show active" id="penjualan" role="tabpanel"
                             aria-labelledby="penjualan-tab">
-                            <div class="row mt-2">
-                               
-        
-                                <div class="col-4 text-start">
-                                    <a class="btn bg-gradient-dark mb-0" href="{{ route('laporan.exportpdf') }}"><i
-                                            class="fas fa-plus" aria-hidden="true"></i>Cetak</a>
-                                </div>
-                            </div>
                             <table class="table table-striped" id="datatable">
                                 <thead>
                                     <tr>
@@ -194,10 +190,29 @@
                                 </tbody>
                             </table>
                         
-                        
-                        
-                        
-                        
+                        </div>
+                        <div class="tab-pane fade" id="barang" role="tabpanel" aria-labelledby="barang-tab">
+                            <table class="table table-striped">
+                                <tr>
+                                    <th>No</th>
+                                    <th>Barang</th>
+                                    <th>Harga</th>
+                                    <th>Kode</th>
+                                    <th>Tgl Kadaluarsa</th>
+                                    <th>Stok</th>
+                           
+        
+                                    @foreach ($barang as $item)
+                                </tr>
+                                <td>{{ $loop->iteration }}</td>
+                                <td>{{ $item->nama_barang }}</td>
+                                <td>{{ $item->harga_barang }}</td>
+                                <td>{{ $item->kode_barang }}</td>
+                                <td>{{ $item->kadarluarsa_barang }}</td>
+                                <td>{{ $item->stok_barang }}</td>
+                              
+                                @endforeach
+                            </table>
                         </div>
                         <div class="tab-pane fade" id="rekap" role="tabpanel" aria-labelledby="rekap-tab">...</div>
                     </div>

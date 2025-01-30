@@ -11,7 +11,8 @@ class Cabangtoko extends Model
 
     protected $fillable = [
         'nama_cabang',
-        'alamat_cabang'
+        'alamat_cabang',
+        'id'
     ];
     public function pegawais()
     {

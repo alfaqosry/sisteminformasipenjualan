@@ -10,6 +10,7 @@ use App\Models\Pegawaitoko;
 use App\Models\Pengeluaran;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class LaporanController extends Controller
 {
@@ -212,4 +213,30 @@ class LaporanController extends Controller
     {
         //
     }
+
+    public function exportPdf()
+    {
+        $toko_id = Pegawaitoko::where('user_id', auth()->user()->id)->first();
+        $penjualan = Penjualan::join(
+            'barangs',
+            'penjualans.barang_id',
+            '=',
+            'barangs.id'
+        )->join(
+            'users',
+            'penjualans.kasir_id',
+            '=',
+            'users.id'
+        )->select('barangs.*', 'penjualans.kuantitas', 'penjualans.harga', 'penjualans.sisa_stok', 'users.name', 'penjualans.created_at as tanggal')
+            ->where('penjualans.toko_id', $toko_id->cabangtoko_id)
+            ->latest()
+            ->get();
+
+        // Load view untuk PDF
+        $pdf = Pdf::loadView('penjualan.export', compact('penjualan'));
+
+        // Return sebagai download file PDF
+        return $pdf->download('laporan_penjualan.pdf');
+    }
+
 }
