@@ -21,7 +21,7 @@ class LaporanController extends Controller
     {
         $daftartoko = Cabangtoko::join('pegawaitoko', 'cabangtokos.id', '=', 'pegawaitoko.cabangtoko_id')
             ->join('users', 'pegawaitoko.user_id', '=', 'users.id')
-            ->select('users.name', 'cabangtokos.nama_cabang', 'cabangtokos.alamat_cabang', 'cabangtokos.id')
+            ->select('users.name', 'cabangtokos.nama_cabang', 'cabangtokos.alamat_cabang', 'cabangtokos.id')->where('pegawaitoko.jabatan', 'manajer')
             ->get();
 
         return view('laporan.index', ['daftartoko' => $daftartoko]);
