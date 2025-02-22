@@ -22,10 +22,12 @@ class CabangtokoController extends Controller
         // $cabang = Cabangtoko::with('pegawais')->get();
 
 
-        $cabang = Cabangtoko::join('pegawaitoko', 'cabangtokos.id', '=' , 'pegawaitoko.cabangtoko_id')
-                             ->join('users', 'pegawaitoko.user_id', '=', 'users.id')
-                             ->select('users.name','cabangtokos.*')->where('pegawaitoko.jabatan', '=', 'manajer')
-                             ->get();
+        // $cabang = Cabangtoko::join('pegawaitoko', 'cabangtokos.id', '=' , 'pegawaitoko.cabangtoko_id')
+        //                      ->join('users', 'pegawaitoko.user_id', '=', 'users.id')
+        //                      ->select('users.name','cabangtokos.*')->where('pegawaitoko.jabatan', '=', 'manajer')
+        //                      ->get();
+
+        $cabang = Cabangtoko::all();
 
                              
         return view('cabangtoko.index',[
@@ -56,7 +58,7 @@ class CabangtokoController extends Controller
        
 
         $cabangtoko = Cabangtoko::create(["nama_cabang" => $request->nama_cabang, "alamat_cabang" => $request->alamat_cabang]);
-        $pegawai = Pegawaitoko::create(["user_id" => $request->manajer, "cabangtoko_id" => $cabangtoko->id, "jabatan" => "manajer"]); 
+        // $pegawai = Pegawaitoko::create(["user_id" => $request->manajer, "cabangtoko_id" => $cabangtoko->id, "jabatan" => "manajer"]); 
         return redirect()->route('cabang.index')->with('sukses', 'Cabang Toko berhasil ditambahkan.');
     }
 

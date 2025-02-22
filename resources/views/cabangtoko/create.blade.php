@@ -18,7 +18,7 @@
                         </div>
 
 
-                        <div class="mb-3">
+                        {{-- <div class="mb-3">
                             <label for="manajer" class="form-label">Manajer</label>
                             <select class="form-select" id="manajer" name="manajer">
                                 <option selected>Choose...</option>
@@ -27,7 +27,7 @@
                                 <option value="{{$user->id}}">{{$user->name}}</option>
                                 @endforeach
                             </select>
-                        </div>
+                        </div> --}}
 
                         <button type="submit" class="btn btn-primary">Tambah</button>
                     </form>
